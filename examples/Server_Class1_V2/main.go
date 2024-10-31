@@ -78,6 +78,18 @@ func main() {
 
 	r.Handle(path_bytes, &p3)
 
+	// path 32 2
+	// Allen-Bradley 5000 EtherNet/IP
+	px := gologix.MapTagProvider{}
+	px.TagWrite("v01", int32(12345))
+	pathx, err := gologix.ParsePath("32,2")
+	if err != nil {
+		log.Printf("problem parsing path. %v", err)
+		os.Exit(1)
+	}
+	r.Handle(pathx.Bytes(), &px)
+	//
+
 	s := gologix.NewServer(&r)
 	go s.Serve()
 
