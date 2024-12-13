@@ -44,7 +44,8 @@ func main() {
 	// the message path before the IP address in the msg instruction will be different based on the actual controller
 	// you're using, but the part after the IP address is what this matches
 	p1 := gologix.MapTagProvider{}
-	path1, err := gologix.ParsePath("1,0")
+	//path1, err := gologix.ParsePath("1,0")
+	path1, err := gologix.ParsePath("32,2")
 	if err != nil {
 		log.Printf("problem parsing path. %v", err)
 		os.Exit(1)
@@ -55,6 +56,7 @@ func main() {
 	// using TagWrite() and TagRead() are treadsafe if needed.
 	// otherwise you can lock p1.Mutex and manipulate p1.Data yourself
 	p1.TagWrite("testtag1", int32(12345))
+	p1.TagWrite("v01", int32(12345))
 	p1.TagWrite("testtag2", float32(543.21))
 	p1.TagWrite("testtag3", []int32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
 	p1.TagWrite("testdint", int32(12))

@@ -11,12 +11,13 @@ func main() {
 	var err error
 
 	// setup the client.  If you need a different path you'll have to set that.
-	client := gologix.NewClient("192.168.2.241")
+	client := gologix.NewClient("localhost")
 
 	// for example, to have a controller on slot 1 instead of 0 you could do this
 	// client.Path, err = gologix.Serialize(gologix.CIPPort{PortNo: 1}, gologix.CIPAddress(1))
 	// or this
 	// client.Path, err = gologix.ParsePath("1,1")
+	client.Controller.Path, _ = gologix.ParsePath("32,2")
 
 	// connect using parameters in the client struct
 	err = client.Connect()
@@ -31,17 +32,17 @@ func main() {
 
 	// define a variable with a type that matches the tag you want to read.  In this case it is an INT so
 	// int16 or uint16 will work.
-	var tag1 int16
+	var v01 int32
 	// call the read function.
 	// note that tag names are case insensitive.
 	// also note that for atomic types and structs you need to use a pointer.
 	// for slices you don't use a pointer.
-	err = client.Read("testint", &tag1)
+	err = client.Read("v01", &v01)
 	if err != nil {
-		log.Printf("error reading testint. %v", err)
+		log.Printf("error reading v01. %v", err)
 	}
 	// do whatever you want with the value
-	log.Printf("tag1 has value %d", tag1)
+	log.Printf("v01 has value %d", v01)
 
 	var dat struct {
 		Field1 int32
